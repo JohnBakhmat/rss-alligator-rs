@@ -11,7 +11,7 @@ generator client {
 model Post {
     id       String  @id @default(cuid())
     title    String
-    link     String
+    link     String  @unique
     pub_date String
     Feed     Feed?   @relation(fields: [feedId], references: [id])
     feedId   String?
@@ -20,6 +20,6 @@ model Post {
 model Feed {
     id    String @id @default(cuid())
     title String
-    link  String
+    link  String @unique
     posts Post[]
 }
