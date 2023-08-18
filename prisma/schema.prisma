@@ -1,16 +1,25 @@
 datasource db {
-    provider = "sqlite"
-    url      = "file:dev.db"
+    provider = "postgres"
+    url      = env("DATABASE_URL")
 }
 
 generator client {
-    // Corresponds to the cargo alias created earlier
     provider = "cargo prisma"
-    // The location to generate the client. Is relative to the position of the schema
     output   = "../src/prisma.rs"
 }
 
-model User {
-    id          String @id
-    displayName String
+model Post {
+    id       String  @id @default(cuid())
+    title    String
+    link     String
+    pub_date String
+    Feed     Feed?   @relation(fields: [feedId], references: [id])
+    feedId   String?
+}
+
+model Feed {
+    id    String @id @default(cuid())
+    title String
+    link  String
+    posts Post[]
 }

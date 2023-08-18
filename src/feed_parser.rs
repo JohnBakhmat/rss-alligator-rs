@@ -1,22 +1,24 @@
 use rss::Channel;
 
 pub struct Feed {
-    title: String,
-    link: String,
-    items: Vec<Post>,
+    pub title: String,
+    pub link: String,
+    pub items: Vec<Post>,
 }
 pub struct Post {
-    title: String,
-    link: String,
-    pub_date: String,
+    pub title: String,
+    pub link: String,
+    pub pub_date: String,
 }
 
+#[allow(unused)]
 impl Post {
     pub fn to_string(&self) -> String {
         format!("*\t{}\t{}\t{}\n", self.title, self.link, self.pub_date)
     }
 }
 
+#[allow(unused)]
 impl Feed {
     pub fn to_string(&self) -> String {
         let mut result = format!("{}\t{}\n", self.title, self.link);

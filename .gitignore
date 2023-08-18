@@ -1,3 +1,4 @@
 /target
 /.vscode
 src/prisma.rs
+.env
