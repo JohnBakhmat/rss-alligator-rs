@@ -9,17 +9,43 @@ generator client {
 }
 
 model Post {
-    id       String  @id @default(cuid())
-    title    String
-    link     String  @unique
-    pub_date String
-    feed     Feed?   @relation(fields: [feed_id], references: [id])
-    feed_id  String?
+    id           String         @id @default(cuid())
+    title        String
+    link         String         @unique
+    pub_date     String
+    feed         Feed?          @relation(fields: [feed_id], references: [id])
+    feed_id      String?
+    Notification Notification[]
 }
 
 model Feed {
-    id    String @id @default(cuid())
+    id    String         @id @default(cuid())
     title String
-    link  String @unique
+    link  String         @unique
     posts Post[]
+    subs  Subscription[]
+}
+
+model User {
+    id           String         @id @default(cuid())
+    username     String         @unique
+    subs         Subscription[]
+    Notification Notification[]
+}
+
+model Subscription {
+    id      String @id @default(cuid())
+    user    User   @relation(fields: [user_id], references: [id])
+    user_id String
+    feed    Feed   @relation(fields: [feed_id], references: [id])
+    feed_id String
+}
+
+model Notification {
+    id       String  @id @default(cuid())
+    user     User    @relation(fields: [user_id], references: [id])
+    user_id  String
+    post     Post    @relation(fields: [post_id], references: [id])
+    post_id  String
+    resolved Boolean @default(false)
 }
