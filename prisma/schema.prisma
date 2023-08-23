@@ -13,8 +13,8 @@ model Post {
     title    String
     link     String  @unique
     pub_date String
-    Feed     Feed?   @relation(fields: [feedId], references: [id])
-    feedId   String?
+    feed     Feed?   @relation(fields: [feed_id], references: [id])
+    feed_id  String?
 }
 
 model Feed {
