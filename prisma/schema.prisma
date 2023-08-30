@@ -9,12 +9,14 @@ generator client {
 }
 
 model Post {
-    id       String  @id @default(cuid())
-    title    String
-    link     String  @unique
-    pub_date String
-    feed     Feed?   @relation(fields: [feed_id], references: [id])
-    feed_id  String?
+    id             String        @id @default(cuid())
+    title          String
+    link           String        @unique
+    pub_date       String
+    feed           Feed?         @relation(fields: [feed_id], references: [id])
+    feed_id        String?
+    Notification   Notification? @relation(fields: [notificationId], references: [id])
+    notificationId Int?
 }
 
 model Feed {
@@ -26,9 +28,10 @@ model Feed {
 }
 
 model User {
-    id       String         @id @default(cuid())
-    username String         @unique
-    subs     Subscription[]
+    id           String         @id @default(cuid())
+    username     String         @unique
+    subs         Subscription[]
+    Notification Notification[]
 }
 
 model Subscription {
@@ -37,4 +40,12 @@ model Subscription {
     user_id String
     feed    Feed   @relation(fields: [feed_id], references: [id])
     feed_id String
+}
+
+model Notification {
+    id       Int      @id @default(autoincrement())
+    datetime DateTime
+    user     User     @relation(fields: [userId], references: [id])
+    posts    Post[]
+    userId   String
 }
